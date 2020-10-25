@@ -201,7 +201,7 @@ def get_query_data(qa_file, doc_tokens_stemed_file, to_file):
 """
 4. get init rank data
 """
-def get_init_rankdata(qa_file, to_file):
+def get_init_rankdata(qa_file, to_file, total_doc):
     if os.path.exists(to_file):
         print("File exists: ", to_file)
         return
@@ -221,6 +221,10 @@ def get_init_rankdata(qa_file, to_file):
                         id = id.strip()
                         if id != "":
                             f.write("%d Q0 DOC-%s %d 1.0 init\n" % (ii, id, j))
+                            j += 1
+                    for id in range(1, total_doc+1):
+                        if str(id) not in doc_ids:
+                            f.write("%d Q0 DOC-%s %d 0.0 init\n" % (ii, id, j))
                             j += 1
                     ii += 1
 
@@ -373,7 +377,7 @@ if __name__ == '__main__':
     qrel_file=type + "/qrel.txt"
     qrel_idcg_file=type + "/qrel.idcg.txt"
 
-
+    total_doc = get_doc_count(doc_file)
 
 
     # 1.
@@ -388,14 +392,13 @@ if __name__ == '__main__':
     # get_query_data(qa_file, query_tokens_stemmed_file, query_file)
 
     # 4.
-    # get_init_rankdata(qa_file, init_rankdata_file)
+    get_init_rankdata(qa_file, init_rankdata_file, total_doc)
 
     # 5.
-    # total_doc = get_doc_count(doc_file)
     # get_qrel_data(qa_file, qrel_file, total_doc)
 
     # 6.
     # get_qrel_idcg(qa_file, qrel_idcg_file)
 
     # 7. embeddings
-    get_embeddings(type, qa_file, doc_file, query_tokens_stemmed_file, doc_tokens_stemed_file)
+    # get_embeddings(type, qa_file, doc_file, query_tokens_stemmed_file, doc_tokens_stemed_file)
