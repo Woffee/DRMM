@@ -287,7 +287,7 @@ def get_qrel_idcg(qa_file, to_file):
             line = line.strip().lower()
             if line != "" :
                 if i%2 ==0:
-                    f.write("%d 1\n" % qid)
+                    f.write("%d\t1.0\n" % qid)
                     qid += 1
 
 
@@ -356,7 +356,7 @@ def get_embeddings(data_type, qa_file, doc_file, query_tokens_stemmed_file, doc_
     w2v_model.wv.save_word2vec_format(to_file, binary=True)
 
 if __name__ == '__main__':
-    type = "Ebay"
+    type = "ebay"
 
     doc_file = type + "/Doc_list.txt"
     doc_tokens_file = type + "/doc_tokens.txt"
@@ -371,7 +371,7 @@ if __name__ == '__main__':
 
     init_rankdata_file = type + "/initrank.txt"
     qrel_file=type + "/qrel.txt"
-    qrel_idcg_file=type + "/qrel_idcg.txt"
+    qrel_idcg_file=type + "/qrel.idcg.txt"
 
 
 
