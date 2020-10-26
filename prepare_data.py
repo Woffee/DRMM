@@ -360,12 +360,12 @@ def get_embeddings(data_type, qa_file, doc_file, query_tokens_stemmed_file, doc_
     w2v_model.wv.save_word2vec_format(to_file, binary=True)
 
 if __name__ == '__main__':
-    type = "twitter"
+    type = "adwords"
 
     doc_file = type + "/Doc_list.txt"
     doc_tokens_file = type + "/doc_tokens.txt"
     doc_tokens_stemed_file = type + "/doc_tokens_stemmed.txt"
-    docset_file = type + "/" + type + ".docset.txt"
+    docset_file = type + "/docset.txt"
     dfcf_file = type + "/dfcf.txt"
 
     qa_file = type + "/QA_list.txt"
