@@ -360,7 +360,7 @@ def get_embeddings(data_type, qa_file, doc_file, query_tokens_stemmed_file, doc_
     w2v_model.wv.save_word2vec_format(to_file, binary=True)
 
 if __name__ == '__main__':
-    type = "ebay"
+    type = "twitter"
 
     doc_file = type + "/Doc_list.txt"
     doc_tokens_file = type + "/doc_tokens.txt"
@@ -381,24 +381,31 @@ if __name__ == '__main__':
 
 
     # 1.
-    # get_all_tokens(filepath=doc_file, to_file=doc_tokens_file)
-    # get_doc_file(doc_file, doc_tokens_stemed_file, docset_file)
+    get_all_tokens(filepath=doc_file, to_file=doc_tokens_file)
+
+    kstem = "/Users/woffee/www/emse-apiqa/baselines2/DRMM/KrovetzStemmer-3.4/c++/kstem"
+    cmd = "%s %s >> %s" % (kstem, doc_tokens_file, doc_tokens_stemed_file)
+    os.system(cmd)
+
+    get_doc_file(doc_file, doc_tokens_stemed_file, docset_file)
 
     # 2. df and cf
-    # get_df_cf(docset_file, dfcf_file)
+    get_df_cf(docset_file, dfcf_file)
 
     # 3.
-    # get_query_tokens(qa_file, query_tokens_file)
-    # get_query_data(qa_file, query_tokens_stemmed_file, query_file)
+    get_query_tokens(qa_file, query_tokens_file)
+    cmd = "%s %s >> %s" % (kstem, query_tokens_file, query_tokens_stemmed_file)
+    os.system(cmd)
+    get_query_data(qa_file, query_tokens_stemmed_file, query_file)
 
     # 4.
     get_init_rankdata(qa_file, init_rankdata_file, total_doc)
 
     # 5.
-    # get_qrel_data(qa_file, qrel_file, total_doc)
+    get_qrel_data(qa_file, qrel_file, total_doc)
 
     # 6.
-    # get_qrel_idcg(qa_file, qrel_idcg_file)
+    get_qrel_idcg(qa_file, qrel_idcg_file)
 
     # 7. embeddings
-    # get_embeddings(type, qa_file, doc_file, query_tokens_stemmed_file, doc_tokens_stemed_file)
+    get_embeddings(type, qa_file, doc_file, query_tokens_stemmed_file, doc_tokens_stemed_file)
